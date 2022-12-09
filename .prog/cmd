@@ -1,0 +1,2 @@
+ sudo pacman -Rsn python-urllib3  python-sphinx imagemagick graphviz  ghostscript pahole xmlto  python-sphinx_rtd_theme  ijs libpaper
+

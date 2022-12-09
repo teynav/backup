@@ -1,3 +1,12 @@
 [submodule ".config/nvim/site/pack/packer/start/packer.nvim"]
 	path = .config/nvim/site/pack/packer/start/packer.nvim
 	url = https://github.com/wbthomason/packer.nvim.git
+[submodule ".prog/grub2-themes"]
+	path = .prog/grub2-themes
+	url = https://github.com/vinceliuice/grub2-themes.git
+[submodule ".prog/signalApngSticker"]
+	path = .prog/signalApngSticker
+	url = git@github.com:teynav/signalApngSticker.git
+[submodule ".prog/faustus"]
+	path = .prog/faustus
+	url = https://github.com/hackbnw/faustus.git
