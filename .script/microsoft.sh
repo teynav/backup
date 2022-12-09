@@ -14,7 +14,7 @@ cd microsoft_fonts
 for i in $to_download
 do
     echo Downloading $i
-    wget $link$i 2&1>/dev/null
+    wget $link$i 2>/dev/null
     cabextract $i &
 done
 
@@ -26,3 +26,5 @@ mv *.TTF fonts/
 mkdir ~/.local/share/fonts 2> /dev/null
 
 mv -f fonts/* ~/.local/share/fonts/
+cd ..
+rm -rf microsoft_fonts
