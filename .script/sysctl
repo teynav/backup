@@ -1,0 +1,6 @@
+#!/bin/bash 
+sysctl vm.vfs_cache_pressure=50
+sysctl vm.dirty_background_ratio=5
+sysctl vm.dirty_ratio=5
+sysctl vm.swappiness=40
+sysctl vm.dirty_writeback_centisecs=6000

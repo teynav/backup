@@ -1,0 +1,60 @@
+</volume_uuid>
+</device></devices>
+
+
+        <!-- User settings -->
+        <users>
+                <!-- Note: Use pamusb-conf to add a user, then you can tweak
+                        manually the configuration here if needed.
+                -->
+
+                <!-- Example:
+                        Authenticate user scox using "MyDevice", and configure pamusb-agent
+                        to automatically start/stop gnome-screensaver on key insertion and
+                        removal:
+                        <user id="scox">
+                                <device>MyDevice</device>
+                                <option name="quiet">true</option>
+                                <agent event="lock">gnome-screensaver-command -lock</agent>
+                                <agent event="unlock">gnome-screensaver-command -deactivate</agent>
+                        </user>
+
+                        Configure user root to authenticate using MyDevice, but update one
+                        time pads at every login (default is 1 hour):
+                        <user id="root">
+                                <device>MyDevice</device>
+                                <option name="pad_expiration">0</option>
+                        </user>
+                -->
+        <user id="navtey">
+        <device>User</device>
+   <option name="quiet">true</option>
+   <agent event="lock">loginctl lock-session $XDG_SESSION_ID</agent>
+   <agent event="unlock">loginctl unlock-session $XDG_SESSION_ID</agent>
+  </user>
+
+
+  <user id="root">
+  <option name="quiet">true</option>
+        <device>Root</device>
+  </user>
+
+</users>
+
+        <!-- Services settings (e.g. gdm, su, sudo...) -->
+        <services>
+                <!-- Example: Speed up hotplugging by disabling one time pads -->
+                <!--
+                <service id="pamusb-agent">
+                        <option name="one_time_pad">false</option>
+                </service>
+                -->
+
+                <!-- Disable output for 'su' (needed for gksu) -->
+                <!--
+                <service id="su">
+                        <option name="quiet">true</option>
+                </service>
+                -->
+        </services>
+</configuration>

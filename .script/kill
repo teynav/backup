@@ -1,0 +1,11 @@
+#!/bin/bash
+if  xdotool getwindowfocus getwindowname | grep -E ".*Firefox$"
+then
+	xdotool key ctrl+w
+elif xdotool getwindowfocus getwindowname | grep -E ".*Brave$"
+then
+	xdotool key ctrl+w
+else
+	xdotool key super+shift+q
+fi
+

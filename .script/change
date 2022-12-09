@@ -1,0 +1,14 @@
+#!/bin/bash
+a=$(pactl list cards | grep bluez_card | head -n 1 | sed -e "s/Name: bluez_card\.//g" | sed -e "s/\t//g")
+echo "Acting on card $a"
+
+if  pactl list cards | grep Active | grep headset-head-unit
+then
+   echo "Headset unit active detected"
+    pactl set-card-profile bluez_card.$a  a2dp-sink-sbc 
+   notify-send On A2DP
+else
+   echo "A2dp unit active detected"
+   pactl set-card-profile bluez_card.$a  headset-head-unit 
+   notify-send On Headset 
+fi

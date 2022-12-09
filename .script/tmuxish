@@ -1,0 +1,19 @@
+#!/bin/bash
+
+TERM=konsole
+if tmux list-clients 2>/dev/null 1> /dev/null 
+then
+	if pgrep $TERM  1>/dev/null
+	then
+#                wmctrl -a $TERM 
+               killall $TERM 
+		tmux new-window
+               $TERM -e tmux attach 
+	else
+	  $TERM  -e tmux attach
+	fi
+#	tmux attach #echo 1
+else
+	$TERM  -e tmux new-session -s Arch
+	echo 2
+fi

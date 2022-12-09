@@ -1,0 +1,42 @@
+#!/bin/bash
+echo THIS WILL ERASE $1
+sudo parted $1 print
+read a
+sudo parted $1 mklabel gpt -s
+sudo parted $1 mkpart Root ext4 2M 7M -s
+sudo parted $1 mkpart User ext4 7M 12M -s
+sudo parted $1 -- mkpart Data1 ntfs 12M -34s -s 1>/dev/null
+sudo parted $1 print
+sudo mkfs.ext4 -F  $1"1" 1>/dev/null
+sudo mkfs.ext4 -F $1"2" 1>/dev/null
+sudo mkfs.ntfs  -f $1"3" 1>/dev/null
+sudo mkdir -p /tmp/mount 2>/dev/null
+sudo mount $1"1" /tmp/mount 
+sudo cp /home/navtey/.script/key /tmp/mount/
+sudo umount /tmp/mount 
+a=$(blkid | grep $1"1" | sed "s/^.*: //g"| sed  "s/ .*//g" | sed "s/\"//g" | sed "s/UUID=//g")
+b=$(blkid | grep $1"2" | sed "s/^.*: //g"| sed  "s/ .*//g" | sed "s/\"//g" | sed "s/UUID=//g")
+file="/home/navtey/test"
+touch $file
+cat /home/navtey/.script/pam/1 > $file
+echo -n $b >> $file
+cat /home/navtey/.script/pam/2 >> $file
+echo -n $a >> $file
+cat /home/navtey/.script/pam/3 >> $file
+sudo rm /etc/pamusb.conf
+sudo mv $file /etc/pamusb.conf
+echo Moved File
+sudo rm -R /home/navtey/.pamusb 2>/dev/null
+sudo rm -R /root/.pamusb 2>/dev/null
+echo Creating boot entry
+touch $file
+cat .script/pam/4 >> $file 
+echo "options rd.luks.name=cebf5d7b-1ecd-450b-a4b5-51a7ffcb062c=arch rd.luks.key=cebf5d7b-1ecd-450b-a4b5-51a7ffcb062c=/key:UUID=$a rd.luks.options=cebf5d7b-1ecd-450b-a4b5-51a7ffcb062c=keyfile-timeout=5s root=/dev/mapper/arch resume=/dev/mapper/arch resume_offset=735232 rw loglevel=3 quiet splash" >> $file
+sudo rm /boot/efi/loader/entries/arch.conf
+sudo cp $file /boot/efi/loader/entries/arch.conf
+echo "#!/bin/bash" > $HOME/.script/efiboot.sh
+echo "efibootmgr --disk /dev/sda --part 1 --create --label "KDE" --loader /arch/vmlinuz-linux --unicode ' rd.luks.name=cebf5d7b-1ecd-450b-a4b5-51a7ffcb062c=arch rd.luks.key=cebf5d7b-1ecd-450b-a4b5-51a7ffcb062c=/key:UUID=$a rd.luks.options=cebf5d7b-1ecd-450b-a4b5-51a7ffcb062c=keyfile-timeout=5s root=/dev/mapper/arch resume=/dev/mapper/arch resume_offset=735232 rw loglevel=3 quiet splash fbcon=nodefer initrd=\\arch\\intel-ucode.img initrd=\\arch\\initramfs-linux.img' --verbose
+" >> $HOME/.script/efiboot.sh
+rm $file
+sudo efibootmgr -b $(efibootmgr | grep KDE | sed "s/Boot//g" | sed "s/\*.*$//g") -B
+sudo $HOME/.script/efiboot.sh

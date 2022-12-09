@@ -1,0 +1,8 @@
+#!/bin/bash
+pacmd set-card-profile bluez_card.EB_06_EF_01_7B_CB a2dp_sink
+notify-send "Setting default Hold tight :*"
+pacmd set-default-sink bluez_sink.EB_06_EF_01_7B_CB.a2dp_sink
+killall volumeicon 
+volumeicon & disown
+notify-send "Done Dana done"
+exit

@@ -1,0 +1,5 @@
+#!/bin/bash 
+cd ~/Pictures
+a=$(ls -Art | tail -n 1)
+notify-send -i "/usr/share/icons/Adwaita/24x24/actions/edit-delete-symbolic.symbolic.png" "Deleting" "This $a" -t 10
+gio trash  "$a" 

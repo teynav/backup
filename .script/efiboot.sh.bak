@@ -1,0 +1,2 @@
+#!/bin/bash
+efibootmgr --disk /dev/sda --part 1 --create --label "Arch Linux KDE" --loader /arch/vmlinuz-linux --unicode 'cryptdevice=/dev/mapper/Main-arch:arch cryptkey=/dev/disk/by-uuid/ad6d43a5-3615-43fd-bbe1-903689adde62:ext4:/key root=/dev/mapper/arch resume=/dev/mapper/arch resume_offset=735232 rw loglevel=3 quiet splash fbcon=nodefer initrd=\arch\intel-ucode.img initrd=\arch\initramfs-linux.img' --verbose

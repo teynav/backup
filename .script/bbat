@@ -1,0 +1,12 @@
+#!/bin/bash
+a=$(bluetooth_battery $(bluetoothctl info | awk '/^Device/ {print $2}') | sed "s/^.*is//g" )
+b=$(echo $a | grep "%" )
+
+if [[ $b = "" ]];
+then
+	echo X
+else
+  echo $a
+fi 
+
+

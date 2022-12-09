@@ -1,0 +1,8 @@
+#!/bin/bash
+echo "  Welcome baby :* "
+i3-msg restart
+killall polybar
+sleep 1
+polybar example & disown 
+notify-send "Done!!!!"
+read x

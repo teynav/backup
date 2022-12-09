@@ -1,0 +1,9 @@
+#!/bin/bash
+if  xdotool getwindowfocus getwindowname | grep -E ".*Firefox$"
+then
+	xdotool key Ctrl+Shift+Tab
+elif xdotool getwindowfocus getwindowname | grep -E "Alacritty"
+then
+	xdotool key Shift+Left
+fi
+
