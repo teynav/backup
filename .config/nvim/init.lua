@@ -11,4 +11,4 @@ require('opts')      -- Options
 require('keys')      -- Keymaps
 require('plug')      -- Plugins
 require('vars')      -- Variables
-
+require('compe')
