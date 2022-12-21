@@ -1,14 +1,25 @@
---[[ init.lua ]]
+-- 1 . Check and install packer ASAP --
+local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
+local is_bootstrap = false
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  is_bootstrap = true
+  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+  vim.cmd [[packadd packer.nvim]]
+end
 
--- LEADER
--- These keybindings need to be defined before the first /
--- is called; otherwise, it will default to "\"
-    vim.g.mapleader = " "
-    vim.g.localleader = "\\"
+-- 2 . Install Plugins after setting up packer --
 
--- IMPORTS
-require('opts')      -- Options
-require('keys')      -- Keymaps
-require('plug')      -- Plugins
-require('vars')      -- Variables
-require('compe')
+require("plugins")
+
+-- If first_install == true then sync() 
+
+if is_bootstrap then
+    require('packer').sync()
+end
+
+-- 3. Set default options --
+require("opts")
+
+-- 4. Set keybindings
+
+require("keys")
